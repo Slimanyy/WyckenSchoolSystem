@@ -143,7 +143,7 @@ function App() {
         <h2>Remove Student</h2>
         <input
           type="text"
-          placeholder="Enter Student ID to remove Number only"
+          placeholder="Student ID, Number Only"
           value={removeStudentId}
           onChange={(e) => setRemoveStudentId(e.target.value)}
           disabled={loading}
