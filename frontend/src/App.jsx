@@ -13,96 +13,96 @@ function App() {
   const [error, setError] = useState("");
 
   async function requestAccounts() {
-    console.log("Requesting accounts...");
+    //console.log("Requesting accounts...");
     await window.ethereum.request({ method: "eth_requestAccounts" });
-    console.log("Accounts requested.");
+    // console.log("Accounts requested.");
   }
 
   async function connectContract() {
-    console.log("Connecting to contract...");
+    // console.log("Connecting to contract...");
     const provider = new ethers.BrowserProvider(window.ethereum);
     const signer = await provider.getSigner();
-    console.log("Signer obtained:", signer);
+    // console.log("Signer obtained:", signer);
     const contract = new ethers.Contract(contractAddress, abi, signer);
-    console.log("Contract connected:", contract);
+    // console.log("Contract connected:", contract);
     return contract;
   }
 
   async function registerStudent() {
-    console.log("Attempting to register student...");
+    // console.log("Attempting to register student...");
     if (!studentId || !studentName) {
       setError("Please enter a valid Student ID and Name.");
-      console.error("Invalid student ID or name.");
+      // console.error("Invalid student ID or name.");
       return;
     }
 
     try {
       setLoading(true);
       setError("");
-      console.log("Requesting accounts for registration...");
+      // console.log("Requesting accounts for registration...");
       await requestAccounts();
       const contract = await connectContract();
-      console.log("Calling registerStudent with ID:", studentId, "Name:", studentName);
+      // console.log("Calling registerStudent with ID:", studentId, "Name:", studentName);
       const tx = await contract.registerStudent(Number(studentId), studentName);
-      console.log("Transaction sent, awaiting confirmation...");
+      // console.log("Transaction sent, awaiting confirmation...");
       await tx.wait();
-      console.log("Transaction confirmed.");
+      // console.log("Transaction confirmed.");
       setStudentId("");
       setStudentName("");
       fetchStudents();
     } catch (err) {
       setError(err.message);
-      console.error("Error registering student:", err);
+      // console.error("Error registering student:", err);
     } finally {
       setLoading(false);
     }
   }
 
   async function removeStudent() {
-    console.log("Attempting to remove student with ID:", removeStudentId);
+    // console.log("Attempting to remove student with ID:", removeStudentId);
     if (!removeStudentId) {
       setError("Please enter a valid Student ID to remove.");
-      console.error("Invalid student ID for removal.");
+      // console.error("Invalid student ID for removal.");
       return;
     }
 
     try {
       setLoading(true);
       setError("");
-      console.log("Requesting accounts for removal...");
+      // console.log("Requesting accounts for removal...");
       await requestAccounts();
       const contract = await connectContract();
-      console.log("Calling removeStudent with ID:", removeStudentId);
+      // console.log("Calling removeStudent with ID:", removeStudentId);
       const tx = await contract.removeStudent(Number(removeStudentId)); // Ensure the contract has this function
-      console.log("Transaction sent, awaiting confirmation...");
+      // console.log("Transaction sent, awaiting confirmation...");
       await tx.wait();
-      console.log("Student removed, transaction confirmed.");
+      // console.log("Student removed, transaction confirmed.");
       setRemoveStudentId(""); // Clear the input after removal
       fetchStudents();
     } catch (err) {
       setError(err.message);
-      console.error("Error removing student:", err);
+      // console.error("Error removing student:", err);
     } finally {
       setLoading(false);
     }
   }
 
   async function fetchStudents() {
-    console.log("Fetching students...");
+    // console.log("Fetching students...");
     try {
       setLoading(true);
       setError("");
-      console.log("Requesting accounts for fetching students...");
+      // console.log("Requesting accounts for fetching students...");
       await requestAccounts();
       const provider = new ethers.BrowserProvider(window.ethereum);
       const contract = new ethers.Contract(contractAddress, abi, provider);
-      console.log("Contract for fetching students:", contract);
+      // console.log("Contract for fetching students:", contract);
       const studentList = await contract.getStudents();
-      console.log("Students fetched:", studentList);
+      // console.log("Students fetched:", studentList);
       setStudents(studentList);
     } catch (err) {
       setError(err.message);
-      console.error("Error fetching students:", err);
+      // console.error("Error fetching students:", err);
     } finally {
       setLoading(false);
     }
