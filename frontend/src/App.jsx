@@ -116,13 +116,13 @@ function App() {
     <div className="App">
       <h1>Class Registration System</h1>
 
-      {error && <p className="error-message" style={{ color: "red" }}>{error}</p>}
+      {/* {error && <p className="error-message" style={{ color: "red" }}>{error}</p>} */}
 
       <div>
         <h2>Register Student</h2>
         <input
           type="text"
-          placeholder="Student ID"
+          placeholder="Student ID, Number Only"
           value={studentId}
           onChange={(e) => setStudentId(e.target.value)}
           disabled={loading}
@@ -143,7 +143,7 @@ function App() {
         <h2>Remove Student</h2>
         <input
           type="text"
-          placeholder="Enter Student ID to remove"
+          placeholder="Enter Student ID to remove Number only"
           value={removeStudentId}
           onChange={(e) => setRemoveStudentId(e.target.value)}
           disabled={loading}
